@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0 auto;
+            padding: 0;
+        }
+        #wrapper{
+            background-color: darkseagreen;
+            width: 800px;
+            height: 800px;
+            text-align: center;
+        }
+        #left{
+            background-color: lemonchiffon;
+            width: 48%;
+            height: 97%;
+            display: inline-block;
+            margin: 10px 5px 0 10px;
+        }
+        #right{
+            background-color: mintcream;
+            width: 48%;
+            height: 97%;
+            display: inline-block;
+            vertical-align: top;
+            margin: 10px 0 10px 0;
+        }
+        h1{
+            margin: 25px 0 25px 0;
+        }
+        input{
+            margin: 10px 0 10px 0;
+        }
+        .submit{
+            font-size: 30px;
+            background-color: seashell;
+            padding: 6px;
+        }
+        .blue{
+            color: blue;
+        }
+        .red{
+            color: red;
+        }
+        .green{
+            color: green;
+        }
+        .black{
+            color: black;
+        }
+        #False{
+            font-size: 15px;
+        }
+        #True{
+            font-size: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="left">
+            <h1>Add a new word!</h1>
+            <form action="/session_word/add_new" method="post">
+                {% csrf_token %}
+                <input type="text" name="word" id="box"><br>
+                    <input type="radio" name="colors" value="red"> Red</input><br>
+                    <input type="radio" name="colors" value="blue"> Blue</input><br>
+                    <input type="radio" name="colors" value="green"> Green</input><br>
+                <input type="checkbox" name="font" value="True">Show in BIG font! <br>
+                <input class="submit" type="submit" value="submit">
+            </form>
+        </div>
+        <div id="right">
+            <form action="/session_word/reset" method="post">
+                {% csrf_token %}
+                <input class="submit" type="submit" name="submit" id="submit">
+            </form>
+            <p>
+                {% for log in request.session.logs %}
+                    <p class= "{{log.colors}}" id = "{{log.font}}" >{{ log.word }}</p>
+                {% endfor %}
+            </p>
+        </div>
+    </div>    
+</body>
+</html>
